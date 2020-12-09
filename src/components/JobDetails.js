@@ -41,8 +41,9 @@ function JobDetails(match) {
 
     useEffect(() => {
         dispatch(itemDetailsFetchData(
-            `https://cors-anywhere.herokuapp.com/https://jobs.github.com/positions/${match.match.params.id}.json?markdown=true`
+            `https://damp-taiga-98560.herokuapp.com/jobs.github.com/positions/${match.match.params.id}.json?markdown=true`
         ))
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
     const isloading = useSelector(state =>
         state.itemDetailsIsLoading
@@ -79,7 +80,8 @@ function JobDetails(match) {
                     {/*<JobDetailsMainCard company={details.company} companyURL={details.company_url} logo={details.company_logo}/>*/}
                     <JobDetailsMainCard title={details.title} description={details.description}
                                         location={details.location}
-                                        createdAt={details.created_at} type={details.type}/>
+                                        createdAt={details.created_at} type={details.type}
+                                        companyURL={details.company_url}/>
                     <JobDetailsHowToApplyCard howToApply={details.how_to_apply}/>
 
                 </>

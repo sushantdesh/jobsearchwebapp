@@ -21,6 +21,10 @@ const useStyles = makeStyles((theme) => ({
         width: theme.spacing(7),
         height: theme.spacing(7),
     },
+    btnColor: {
+        backgroundColor: theme.palette.primary.main,
+        color: "#FFFFFF",
+    },
 
 }))
 
@@ -39,7 +43,7 @@ function JobDetailsHeadCard(props) {
                         </Avatar>
                     }
                     action={
-                        <Button onClick={() => window.location.href = companyURL}>
+                        <Button onClick={() => window.location.href = companyURL} className={classes.btnColor}>
                             Company
                         </Button>
                     }

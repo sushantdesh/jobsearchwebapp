@@ -6,7 +6,11 @@ import { BrowserRouter as Router,
 import {createMuiTheme, ThemeProvider} from "@material-ui/core/styles";
 import JobList from "./components/JobList";
 import JobDetails from "./components/JobDetails";
+
 import {useSelector} from "react-redux";
+import useLocation from "./hooks/useLocation";
+
+
 
 
 function App() {
@@ -37,15 +41,21 @@ function App() {
             },
         },
     });
+
+    // const isprefereddark=window.matchMedia('(prefers-color-scheme: dark)').matches;
+
     const isDark = useSelector(state =>
         state.darkModeToggle
     )
+    //location
+    useLocation();
 
 
   return (
 
+
       <ThemeProvider theme={isDark ?darkTheme : lightTheme }>
-          { console.log(isDark)}
+
       <Router>
         <Switch>
         <Route path="/" exact component={JobList}/>

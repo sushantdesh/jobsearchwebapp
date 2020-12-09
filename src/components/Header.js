@@ -1,4 +1,4 @@
-import {AppBar, Grid, makeStyles, Switch, Typography} from "@material-ui/core";
+import {AppBar, makeStyles, Switch, Typography, Paper, Toolbar, Box} from "@material-ui/core";
 import React from "react";
 import WbSunnyIcon from '@material-ui/icons/WbSunny';
 import Brightness3Icon from '@material-ui/icons/Brightness3';
@@ -10,6 +10,7 @@ const useStyle = makeStyles((theme) => (
     {
         appbar: {
             borderBottomLeftRadius: "50%",
+            minHeight:"100px",
             display: "flex",
             [theme.breakpoints.down('xs')]: {
                 borderBottomLeftRadius: 0,
@@ -18,7 +19,11 @@ const useStyle = makeStyles((theme) => (
         },
         title: {
             flexGrow: 1
-        }
+        },
+        paperb: {
+            margin:"auto"
+        },
+
     }
 ))
 
@@ -31,25 +36,22 @@ function Header() {
 
     return (
         <AppBar className={classes.appbar} position="static">
+            <Toolbar className={classes.darkMode}>
+                <Box display='flex' flexGrow={1} >
+                    {/*Left Side*/}
+                    <Typography style={{paddingLeft: "10%", paddingTop: "1%", flexGrow: 1}} variant="h6"
+                                className={classes.title}>
+                        Dev Jobs
+                    </Typography>
 
-            <Typography style={{paddingLeft: "10%", paddingTop: "1%", flexGrow: 1}} variant="h6"
-                        className={classes.title}>
-                Dev Jobs
-            </Typography>
-            {/*</div>*/}
-            <Grid container xs={12}>
-                <Grid item xs={2}>
-
-                </Grid>
-                <Grid item xs={8}/>
-                <Grid item xs={2}>
+                </Box>
+                {/* dark mode is on the right side */}
+                <Paper className={classes.paperb}>
                     <WbSunnyIcon/>
                     <Switch onClick={handleClick}/>
                     <Brightness3Icon/>
-                </Grid>
-            </Grid>
-
-
+                </Paper>
+            </Toolbar>
         </AppBar>
     )
 }

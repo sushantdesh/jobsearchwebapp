@@ -1,14 +1,13 @@
-import { Grid, Paper, Button, Typography, LinearProgress} from "@material-ui/core";
+import {Button, Grid, LinearProgress, Paper, Typography} from "@material-ui/core";
 import {makeStyles} from '@material-ui/core/styles';
 
 import React, {useEffect, useState} from 'react';
-import {useSelector, useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {itemsFetchData, paginationItemsFetchData} from '../redux/actions/actions'
 import {Alert, AlertTitle} from '@material-ui/lab';
 import Filter from "./Filter";
 import Header from "./Header";
 import JobCard from "./JobCard";
-import {usePosition} from 'use-position';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -54,61 +53,49 @@ const useStyles = makeStyles((theme) => ({
 
 
 function JobList() {
-    const [page, setPage] = useState(1);
+
+    const [page, setPage] = useState(1); // pagination track
+
+
+
+    const location = useSelector(state =>
+        state.locationCors
+    )    //getcors from store
 
 
     const dispatch = useDispatch();
 
-
-    const {latitude, longitude, error, timestamp, accuracy} =
-        usePosition(true, {enableHighAccuracy: true});
-
-    const [location, setLocation] = useState({
-        lat: null,
-        long: null
-
-    })
-
-    useEffect(() => {
-        setLocation({
-            lat: latitude,
-            long: longitude
-        })
-    }, [latitude, longitude])
-
-
-    // const { latitude, longitude, error } = usePosition();
-    // const latitude=37.3229978
-    // const longitude= -122.0321823
-
-
     useEffect(() => {
 
-        if (location.lat) {
-
+        if (location.lat) { // if location details are present at the store
             dispatch(itemsFetchData(
-                `https://cors-anywhere.herokuapp.com/https://jobs.github.com/positions.json?lat=${latitude}&long=${longitude}`
+                `https://damp-taiga-98560.herokuapp.com/jobs.github.com/positions.json?lat=${location.lat}&long=${location.long}`
             ))
-        } else {
+        } else if (location.lat === null) {
 
-            dispatch(itemsFetchData(
-                "https://cors-anywhere.herokuapp.com/https://jobs.github.com/positions.json?description=&location="
+
+            dispatch(itemsFetchData( // if location details are NOT present at the store
+                "https://damp-taiga-98560.herokuapp.com/jobs.github.com/positions.json?description=&location="
             ))
-
         }
-    }, [location])
-    const currentUrl = useSelector(state => state.currentUrl)
-    const loadMore = () => {
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [location.lat])
 
+
+    const currentUrl = useSelector(state => state.currentUrl) // for pagination, I'm storing current url
+
+    const loadMore = () => { // Pagination button event
         setPage(page + 1)
         dispatch(paginationItemsFetchData(
             currentUrl + "&page=" + page
         ))
-
     }
+
+    // variables form store for conditional rendering
     const isloading = useSelector(state =>
         state.itemsIsLoading
     )
+
     const haserrored = useSelector(state =>
         state.itemsHasErrored
     )
@@ -126,18 +113,13 @@ function JobList() {
     // const matches = useMediaQuery(theme.breakpoints.up('sm'));
     const classes = useStyles();
     return (
+        //main div
         <div className={classes.mainContainerBackground} style={{height: "100vh"}}>
-
             <Header/>
-
-
             <Grid container spacing={4} className={classes.mainContainer}>
-
-
                 <Grid item xs={12} style={{textAlign: "center"}} className={classes.Filter}>
                     <Paper>
                         <Filter/>
-
                     </Paper>
                 </Grid>
                 {
@@ -148,20 +130,13 @@ function JobList() {
                             might be the
                             issue with heroku, try again!</strong>
                     </Alert>
-
-
                 }
                 {
                     isloading &&
                     <LinearProgress className={classes.progress}/>
-
                 }
                 {!haserrored && !isloading && items.length > 0 &&
-
-
-                items.map((item) => {
-
-
+                items.map((item) => { // Jobcard props
                     return (
                         <JobCard key={item.id} id={item.id} type={item.type} url={item.url} created_at={item.created_at}
                                  company={item.company}
@@ -170,23 +145,17 @@ function JobList() {
                         />
                     )
                 })
-
                 }
                 {!items.length > 0 && !isloading && !haserrored && <Grid item xs={12} style={{textAlign: "center"}}>
                     <Typography>No Jobs at your location</Typography>
-
                 </Grid>
-
                 }
-
                 {items.length > 0 && !paginationhaserrored && !paginationislaoding &&
                 <Grid item xs={12} style={{textAlign: "center"}}>
                     {items.length % 50 === 0 ? <Button onClick={loadMore}>Load More</Button> :
                         <Typography>No More Jobs</Typography>}
-
                 </Grid>
                 }
-
                 {paginationhaserrored &&
                 <Grid item xs={12} style={{textAlign: "center"}}>
                     <Alert className={classes.progress} severity="error">
@@ -195,19 +164,13 @@ function JobList() {
                     </Alert>
                 </Grid>
                 }
-
                 {paginationislaoding &&
                 <Grid item xs={12} style={{textAlign: "center"}}>
                     <LinearProgress className={classes.progress}/>
                 </Grid>
                 }
-
             </Grid>
-
-
         </div>
     )
-
 }
-
 export default JobList;

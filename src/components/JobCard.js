@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
 
 function JobCard(props) {
     const classes = useStyles()
-    const {id, type, url, created_at, company, company_url, title, company_logo, location} = props;
+    const {id, type, created_at, company, title, company_logo, location} = props;
 
     return (
         <Grid item xs={12} sm={4} className="card-grid">
@@ -43,10 +43,10 @@ function JobCard(props) {
                         <Typography variant="h6" color="textPrimary" component="p">
                             {title}
                         </Typography>
-                        <Typography variant="body2" color="textSecondary" component="p">
+                        <Typography variant="body2" color="textPrimary" component="p">
                             {company}
                         </Typography>
-                        <Typography variant="body1" color="Blue" component="p">
+                        <Typography variant="body1" color="secondary" component="p">
                             {location}
                         </Typography>
                     </CardContent>

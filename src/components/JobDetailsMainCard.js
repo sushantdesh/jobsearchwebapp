@@ -1,7 +1,8 @@
-import {Button, Card, CardContent, Grid} from "@material-ui/core";
+import { Button, Card, CardContent, CardHeader, Grid} from "@material-ui/core";
 import {makeStyles} from "@material-ui/core/styles";
 import React from "react";
 import Typography from '@material-ui/core/Typography';
+import Moment from 'react-moment'
 
 import deepPurple from "@material-ui/core/colors/deepPurple";
 
@@ -29,29 +30,31 @@ const useStyles = makeStyles((theme) => ({
 function JobDetailsMainCard(props) {
 
 
-    const {title, description, location, createdAt, type} = props;
+    const {title, description, location, createdAt,type, companyURL} = props;
     const classes = useStyles();
 
     return (
         <Grid item xs={12}>
             < Card className={classes.bgColor}>
-                <CardContent>
-                    <Grid container={12} justify="center" alignItems="center">
-                        <Grid item xs={6}>
+                <CardHeader
 
-                            <Typography variant="body2" color="textSecondary" component="p">
-                                {createdAt}{type}
-                            </Typography>
-                        </Grid>
-                        <Grid item xs={6}>
-                            <Button className={classes.btnColor}>Apply now</Button>
-                        </Grid>
-                    </Grid>
+                    action={
+                        <Button onClick={() => window.location.href = companyURL} className={classes.btnColor}>
+                            Apply Now
+                        </Button>
+                    }
+
+                    subheader={<Moment fromNow>{createdAt}</Moment> }
+
+
+                />
+                <CardContent>
+
                     <Typography variant="body1" color="textPrimary" component="p">
                         {title}
                     </Typography>
                     <Typography variant="body2" color="textSecondary" component="p">
-                        {location}
+                        {type} • {location}
                     </Typography>
                     <Typography variant="body1" color="textSecondary" component="p">
                         {description}

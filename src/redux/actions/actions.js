@@ -9,7 +9,7 @@ import {
     PAGINATION_ITEMS_FETCH_DATA_SUCCESS,
     PAGINATION_ITEMS_HAS_ERRORED,
     PAGINATION_ITEMS_IS_LOADING,
-    DARK_MODE_TOGGLE
+    DARK_MODE_TOGGLE, SET_LOCATION_CORS
 }
     from './actionTypes'
 
@@ -174,5 +174,14 @@ export function darkModeToggle(bool) {
     return {
         type: DARK_MODE_TOGGLE,
         isTrue: bool
+    };
+}
+
+//SET lOCATION CORS
+export function locationCors(bool) {
+
+    return {
+        type: SET_LOCATION_CORS,
+        cors:bool
     };
 }

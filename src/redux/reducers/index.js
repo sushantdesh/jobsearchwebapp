@@ -1,5 +1,6 @@
 import {items, itemsHasErrored, itemsIsLoading, paginationItemsIsLoading,paginationItemsHasErrored} from './jobdata'
 import {currentUrl} from './url'
+import {locationCors} from "./locationCors";
 import{details,itemDetailsHasErrored,itemDetailsIsLoading} from './JobDetails'
 import {darkModeToggle} from './mode'
 
@@ -19,7 +20,9 @@ export  default combineReducers({
     currentUrl,
 
     paginationItemsIsLoading,
-    paginationItemsHasErrored
+    paginationItemsHasErrored,
+
+    locationCors
 
 
 })

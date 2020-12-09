@@ -22,7 +22,7 @@ function JobDetailsHowToApplyCard(props) {
             <Card className={classes.bgColor}>
                 <CardContent>
 
-                    <Typography variant="body1" color="white" component="p">
+                    <Typography variant="body1" color="inherit" component="p">
                         {howToApply}
                     </Typography>
 
